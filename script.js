@@ -3,7 +3,7 @@ let flippedCards = [];
 let flippedCardIds = [];
 let score = 0;
 
-const cardDeck = document.querySelector('.scene');
+const cardDeck = document.querySelector('.container');
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -21,9 +21,11 @@ function shuffle(array) {
 
 // Create and return HTML for a card
 function createCard(id, value) {
-    return `<div class="card" data-id="${id}" data-value="${value}">
-                <div class="card__face card__face--front"></div>
-                <div class="card__face card__face--back">${value}</div>
+    return `<div class="scene">
+                <div class="card" data-id="${id}" data-value="${value}">
+                    <div class="card__face card__face--front"></div>
+                    <div class="card__face card__face--back">${value}</div>
+                </div>
             </div>`
 }
 

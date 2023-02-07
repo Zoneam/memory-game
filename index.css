@@ -1,21 +1,30 @@
-.scene {
+body { font-family: sans-serif; }
+
+.container {
     display:flex;
+    margin: 55px auto;
     flex-wrap: wrap;
     width: 800px;
     height: 800px;
+}
+
+  .scene {
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #CCC;
     perspective: 600px;
-    margin: 25px auto;
   }
 
   .card {
-    flex-grow: 1;
-    box-sizing: border-box;
-    width: 25%;
-    height: 25%;
-    border: 3px solid black;
     position: relative;
-    transition: transform 1s;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
     transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 0.5s;
   }
 
   .card__face {
@@ -27,7 +36,7 @@
 
   .card__face:hover {
     cursor: pointer;
-    background-color: brown;
+    opacity: 0.7;
   }
 
   .card__face--front {
@@ -43,5 +52,5 @@
   }
 
   .card.is-flipped {
-    transform: rotateY(180deg);
+    transform: translateX(-100%) rotateY(-180deg);
   }
