@@ -1,9 +1,45 @@
-const cards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+
 let flippedCards = [];
 let flippedCardIds = [];
 let score = 0;
 
 const cardDeck = document.querySelector('.container');
+let inputField = document.getElementById("inputField");
+let incrementButton = document.getElementById("incrementButton");
+let decrementButton = document.getElementById("decrementButton");
+
+function nextPerfectSquare(num) {
+    let i = 1;
+    while (i * i <= num) {
+      i++;
+    }
+    if(i % 2 == 0) return i * i;
+    else return (i + 1) * (i + 1);
+  }
+
+  function prevPerfectSquare(num) {
+    let i = 1;
+    while (i * i < num) {
+        i++
+    }
+    if((i-1) % 2 == 0) return (i-1) * (i-1);
+    else return (i - 2) * (i - 2);
+  }
+
+  incrementButton.addEventListener("click", function() {
+    let current = parseInt(inputField.value);
+    inputField.value = nextPerfectSquare(current);
+    inputField.step = nextPerfectSquare(current) - current;
+    renderDeck(inputField.value);
+  });
+
+  decrementButton.addEventListener("click", function() {
+    let current = parseInt(inputField.value);
+    inputField.value = prevPerfectSquare(current);
+    inputField.step = current - prevPerfectSquare(current);
+    renderDeck(inputField.value);
+  });
+
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -15,7 +51,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
@@ -23,17 +58,29 @@ function shuffle(array) {
 function createCard(id, value) {
     return `<div class="scene">
                 <div class="card" data-id="${id}" data-value="${value}">
-                    <div class="card__face card__face--front"></div>
+                    <div class="card__face card__face--front"><h1 id="fade-number"></h1></div>
                     <div class="card__face card__face--back"><h1 class="number">${value}</h1></div>
                 </div>
             </div>`
 }
 
 // Render the deck of cards
-function renderDeck() {
+function renderDeck(tiles) {
+    const cards = [];
+    for (let i = 0; i < tiles/2; i++) {
+        cards.push(i,i);
+    }
     const shuffledCards = shuffle(cards);
     const deckHTML = shuffledCards.map((card, index) => createCard(index, card)).join('');
     cardDeck.innerHTML = deckHTML;
+
+    // Add event listeners to each card
+    const allCards = document.querySelectorAll('.card');
+    allCards.forEach((card) => {
+        card.style.width = `${800/Math.sqrt(tiles)}px`;
+        card.style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
+        card.addEventListener('click', flipCard);
+});
 }
 
 // Flip a card
@@ -41,7 +88,8 @@ function flipCard(event) {
     const card = event.currentTarget;
     const id = card.getAttribute('data-id');
     const value = card.getAttribute('data-value');
-
+    card.firstElementChild.querySelector('h1').classList.remove('fade-number');
+    card.firstElementChild.querySelector('h1').innerText = value;
     if (flippedCards.length < 2 && !flippedCardIds.includes(id)) {
         flippedCards.push({ id, value });
         flippedCardIds.push(id);
@@ -60,6 +108,7 @@ function flipCard(event) {
                     flippedCards.forEach((flippedCard) => {
                         const cardToFlip = document.querySelector(`[data-id="${flippedCard.id}"]`);
                         cardToFlip.classList.remove('is-flipped');
+                        cardToFlip.firstElementChild.querySelector('h1').classList.add('fade-number');
                     });
                     flippedCards = [];
                     flippedCardIds = [];
@@ -70,10 +119,6 @@ function flipCard(event) {
 }
 
 // Initial render of the deck
-renderDeck();
+renderDeck(16);
 
-// Add event listeners to each card
-const allCards = document.querySelectorAll('.card');
-allCards.forEach((card) => {
-    card.addEventListener('click', flipCard);
-});
+

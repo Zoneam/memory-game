@@ -1,5 +1,21 @@
 body { font-family: sans-serif; }
 
+#input{
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+
+    text-align: center;
+    background: transparent;
+}
+
+.icon-sm {
+    width: 2rem;
+    height: 2rem;
+}
+
 .container {
     display:flex;
     margin: 55px auto;
@@ -9,15 +25,13 @@ body { font-family: sans-serif; }
 }
 
   .scene {
-    flex-grow: 1;
-    box-sizing: border-box;
-    width: 200px;
-    height: 200px;
-    border: 3px dotted rgb(68, 75, 109);
     perspective: 600px;
+    box-sizing: border-box;
   }
 
   .card {
+    border: 3px solid blue;
+    box-sizing: border-box;
     position: relative;
     width: 100%;
     height: 100%;
@@ -41,19 +55,39 @@ body { font-family: sans-serif; }
 
   .card__face--front {
     background: red;
+    display: flex;
+    justify-content: center;
   }
   
   .card__face--back {
     display: flex;
     justify-content: center;
-
     background: blue;
-    font-size: 44px;
     transform: rotateY( 180deg );
   }
 
-  .number {
+  h1{
+    margin: 0;
+    color:white;
+  }
+
+  button {
+    width:50px;
+    height:60px;
+  }
+
+  input {
+    font-size: 24px;
+    height:60px;
+  }
+
+  .number, .fade-number {
     margin: auto;
+  }
+
+  .fade-number {
+    opacity: 0;
+    transition: opacity 3s;
   }
 
   .card.is-flipped {
