@@ -24,7 +24,7 @@ function createCard(id, value) {
     return `<div class="scene">
                 <div class="card" data-id="${id}" data-value="${value}">
                     <div class="card__face card__face--front"></div>
-                    <div class="card__face card__face--back">${value}</div>
+                    <div class="card__face card__face--back"><h1 class="number">${value}</h1></div>
                 </div>
             </div>`
 }

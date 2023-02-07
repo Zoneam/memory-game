@@ -13,7 +13,7 @@ body { font-family: sans-serif; }
     box-sizing: border-box;
     width: 200px;
     height: 200px;
-    border: 1px solid #CCC;
+    border: 3px dotted rgb(68, 75, 109);
     perspective: 600px;
   }
 
@@ -44,11 +44,16 @@ body { font-family: sans-serif; }
   }
   
   .card__face--back {
+    display: flex;
+    justify-content: center;
+
     background: blue;
     font-size: 44px;
-    margin: auto;
-    text-align: center;
     transform: rotateY( 180deg );
+  }
+
+  .number {
+    margin: auto;
   }
 
   .card.is-flipped {
