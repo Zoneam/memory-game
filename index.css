@@ -1,0 +1,47 @@
+.scene {
+    display:flex;
+    flex-wrap: wrap;
+    width: 800px;
+    height: 800px;
+    perspective: 600px;
+    margin: 25px auto;
+  }
+
+  .card {
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 25%;
+    height: 25%;
+    border: 3px solid black;
+    position: relative;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+  }
+
+  .card__face {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+  }
+
+  .card__face:hover {
+    cursor: pointer;
+    background-color: brown;
+  }
+
+  .card__face--front {
+    background: red;
+  }
+  
+  .card__face--back {
+    background: blue;
+    font-size: 44px;
+    margin: auto;
+    text-align: center;
+    transform: rotateY( 180deg );
+  }
+
+  .card.is-flipped {
+    transform: rotateY(180deg);
+  }
