@@ -30,18 +30,20 @@ function prevPerfectSquare(num) {
     renderDeck(inputField.value);
   });
 
+  cardDeck.addEventListener('click', flipCard);
 
-function shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+
+function shuffle(cards) {
+    let currentIndex = cards.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = cards[currentIndex];
+        cards[currentIndex] = cards[randomIndex];
+        cards[randomIndex] = temporaryValue;
     }
-    return array;
+    return cards;
 }
 
 // Create and return HTML for a card
@@ -73,14 +75,14 @@ function renderDeck(tiles) {
         card.style.width = `${800/Math.sqrt(tiles)}px`;
         card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.children[1].querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
-        card.addEventListener('click', flipCard);
+        // card.addEventListener('click', flipCard);
     });
     timer = setInterval(hint, 800/tiles*40);
 }
 
 // Flip a card
 function flipCard(event) {
-    const card = event.currentTarget;
+    const card = event.target.parentNode;
     const id = card.getAttribute('data-id');
     const value = card.getAttribute('data-value');
     card.firstElementChild.querySelector('h1').classList.remove('fade-number');
@@ -92,11 +94,12 @@ function flipCard(event) {
         card.classList.add('is-flipped');
 
         if (flippedCards.length === 2) {
+
             if (flippedCards[0].value === flippedCards[1].value) {
                 score++;
                 flippedCards = [];
                 flippedCardIds = [];
-                console.log(score)
+
                 if (score === inputField.value/2) {
                     winMessage.innerText = "You win!"
                 }
