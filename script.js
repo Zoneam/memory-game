@@ -2,7 +2,7 @@
 let flippedCards = [];
 let flippedCardIds = [];
 let score = 0;
-
+let timer = null;
 const cardDeck = document.querySelector('.game-wrapper');
 let inputField = document.getElementById("inputField");
 let incrementButton = document.getElementById("incrementButton");
@@ -66,6 +66,7 @@ function createCard(id, value) {
 
 // Render the deck of cards
 function renderDeck(tiles) {
+    if (timer) clearInterval(timer);
     const cards = [];
     for (let i = 0; i < tiles/2; i++) {
         cards.push(i,i);
@@ -80,7 +81,8 @@ function renderDeck(tiles) {
         card.style.width = `${800/Math.sqrt(tiles)}px`;
         card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.addEventListener('click', flipCard);
-});
+    });
+    timer = setInterval(hint, 800/tiles*40);
 }
 
 // Flip a card
@@ -113,7 +115,6 @@ function flipCard(event) {
                         cardToFlip.firstElementChild.querySelector('h1').classList.add('fade-number');
                         setTimeout(() => {
                             cardToFlip.firstElementChild.querySelector('h1').innerText = '';
-
                         },2000);
                         
                     });
@@ -123,6 +124,18 @@ function flipCard(event) {
             }
         }
     }
+}
+
+
+function hint() {
+        let card1 = document.querySelector(`[data-id="${Math.floor(Math.random() * inputField.value)}"]`);
+        card1.children[0].querySelector('h1').innerText = card1.children[1].querySelector('h1').innerText;
+        card1.children[0].querySelector('h1').classList.add('fade-number');
+        setTimeout(() => {
+            card1.children[0].querySelector('h1').classList.remove('fade-number');
+            card1.children[0].querySelector('h1').innerText = '';
+        }, 3000);
+
 }
 
 // Initial render of the deck
