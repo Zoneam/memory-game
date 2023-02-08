@@ -72,7 +72,8 @@ function renderDeck(tiles) {
     // Add event listeners to each card
     const allCards = document.querySelectorAll('.card');
     allCards.forEach((card) => {
-        card.style.width = `${800/Math.sqrt(tiles)}px`;
+        console.log(cardDeck.offsetWidth)
+        card.style.width = `${parseInt(cardDeck.offsetWidth)/Math.sqrt(tiles)}px`;
         card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.children[1].querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         // card.addEventListener('click', flipCard);
