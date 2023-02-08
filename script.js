@@ -7,6 +7,7 @@ const cardDeck = document.querySelector('.game-wrapper');
 let inputField = document.getElementById("inputField");
 let incrementButton = document.getElementById("incrementButton");
 let decrementButton = document.getElementById("decrementButton");
+let winMessage = document.querySelector('#win-message');
 
 function nextPerfectSquare(num) {
     let i = 1;
@@ -105,7 +106,7 @@ function flipCard(event) {
                 flippedCardIds = [];
                 console.log(score)
                 if (score === inputField.value/2) {
-                    alert('You win!');
+                    winMessage.innerText = "You win!"
                 }
             } else {
                 setTimeout(() => {
