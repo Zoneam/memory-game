@@ -3,30 +3,29 @@ let flippedCards = [];
 let flippedCardIds = [];
 let score = 0;
 
-const cardDeck = document.querySelector('.container');
+const cardDeck = document.querySelector('.game-wrapper');
 let inputField = document.getElementById("inputField");
 let incrementButton = document.getElementById("incrementButton");
 let decrementButton = document.getElementById("decrementButton");
 
 function nextPerfectSquare(num) {
     let i = 1;
-    while (i * i <= num) {
-      i++;
-    }
+    while (i * i <= num) i++;
     if(i % 2 == 0) return i * i;
     else return (i + 1) * (i + 1);
   }
 
   function prevPerfectSquare(num) {
     let i = 1;
-    while (i * i < num) {
-        i++
-    }
+    while (i * i < num) i++;
     if((i-1) % 2 == 0) return (i-1) * (i-1);
     else return (i - 2) * (i - 2);
   }
 
   incrementButton.addEventListener("click", function() {
+    score = 0;
+    flippedCardIds = [];
+    flippedCards = [];
     let current = parseInt(inputField.value);
     inputField.value = nextPerfectSquare(current);
     inputField.step = nextPerfectSquare(current) - current;
@@ -34,6 +33,9 @@ function nextPerfectSquare(num) {
   });
 
   decrementButton.addEventListener("click", function() {
+    score = 0;
+    flippedCardIds = [];
+    flippedCards = [];
     let current = parseInt(inputField.value);
     inputField.value = prevPerfectSquare(current);
     inputField.step = current - prevPerfectSquare(current);
@@ -56,11 +58,9 @@ function shuffle(array) {
 
 // Create and return HTML for a card
 function createCard(id, value) {
-    return `<div class="scene">
-                <div class="card" data-id="${id}" data-value="${value}">
-                    <div class="card__face card__face--front"><h1 id="fade-number"></h1></div>
-                    <div class="card__face card__face--back"><h1 class="number">${value}</h1></div>
-                </div>
+    return `<div class="card" data-id="${id}" data-value="${value}">
+                <div class="card__face card__face--front"><h1 id="fade-number"></h1></div>
+                <div class="card__face card__face--back"><h1 class="number">${value}</h1></div>
             </div>`
 }
 
@@ -78,7 +78,7 @@ function renderDeck(tiles) {
     const allCards = document.querySelectorAll('.card');
     allCards.forEach((card) => {
         card.style.width = `${800/Math.sqrt(tiles)}px`;
-        card.style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
+        card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.addEventListener('click', flipCard);
 });
 }
@@ -89,8 +89,9 @@ function flipCard(event) {
     const id = card.getAttribute('data-id');
     const value = card.getAttribute('data-value');
     card.firstElementChild.querySelector('h1').classList.remove('fade-number');
-    card.firstElementChild.querySelector('h1').innerText = value;
+
     if (flippedCards.length < 2 && !flippedCardIds.includes(id)) {
+        card.firstElementChild.querySelector('h1').innerText = value;
         flippedCards.push({ id, value });
         flippedCardIds.push(id);
         card.classList.add('is-flipped');
@@ -100,7 +101,8 @@ function flipCard(event) {
                 score++;
                 flippedCards = [];
                 flippedCardIds = [];
-                if (score === 8) {
+                console.log(score)
+                if (score === inputField.value/2) {
                     alert('You win!');
                 }
             } else {
@@ -109,6 +111,11 @@ function flipCard(event) {
                         const cardToFlip = document.querySelector(`[data-id="${flippedCard.id}"]`);
                         cardToFlip.classList.remove('is-flipped');
                         cardToFlip.firstElementChild.querySelector('h1').classList.add('fade-number');
+                        setTimeout(() => {
+                            cardToFlip.firstElementChild.querySelector('h1').innerText = '';
+
+                        },2000);
+                        
                     });
                     flippedCards = [];
                     flippedCardIds = [];
