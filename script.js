@@ -7,7 +7,8 @@ const incrementButton = document.getElementById("incrementButton");
 const decrementButton = document.getElementById("decrementButton");
 const winMessage = document.querySelector('#win-message');
 const resetButton = document.querySelector('#resetButton');
-
+const wrongGuesses = document.querySelector('#wrong-guesses');
+const guessesLeft = document.querySelector('#guesses-left');
 // ********** Game Reset **********
 resetButton.addEventListener('click', () => {
     renderDeck(parseInt(boardSize.textContent));
@@ -64,9 +65,10 @@ function createCard(id, value) {
 
 // Render tiles to the DOM
 function renderDeck(tiles) {
-    console.log(tiles)
     if (timer) clearInterval(timer);
     score = 0;
+    wrongGuesses.textContent = 0;
+    guessesLeft.textContent = boardSize.textContent/2;
     flippedCardIds = [];
     flippedCards = [];
     const cards = [];
@@ -108,8 +110,9 @@ function flipCard(event) {
                 score++;
                 flippedCards = [];
                 flippedCardIds = [];
+                guessesLeft.textContent = boardSize.textContent/2 - score;
                 if (score === boardSize.textContent/2) {
-                    winMessage.innerText = "You win!"
+                    winMessage.innerText = "You won!"
                 }
             } else {
                 setTimeout(() => {
@@ -124,6 +127,7 @@ function flipCard(event) {
                     });
                     flippedCards = [];
                     flippedCardIds = [];
+                    wrongGuesses.textContent = parseInt(wrongGuesses.textContent) + 1;
                 }, 1000);
             }
         }

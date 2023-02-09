@@ -11,13 +11,25 @@
     <script defer src="./script.js"></script>
 </head>
 <body>
-    <div id="input">
-        <button class="btn btn-success" id="decrementButton">-</button>
-        <span type="number" id="inputField" name="points" value="16" readonly>16</span>
-        <button class="btn btn-success" id="incrementButton">+</button>
-    </div>
-    <div id="button-container">
-        <button class="btn btn-danger" id="resetButton">Reset</button>
+    <div id="header">
+        <div class="timer-container">
+            <h1 id="timer">1:00</h1>
+        </div>
+        <div id="heder-middle">
+            <h1>Memory Game</h1>
+            <div id="input">
+                <button class="btn btn-success" id="decrementButton">-</button>
+                <span type="number" id="inputField" name="points" value="16" readonly>16</span>
+                <button class="btn btn-success" id="incrementButton">+</button>
+            </div>
+            <div id="button-container">
+                <button class="btn btn-danger" id="resetButton">Reset</button>
+            </div>
+        </div>
+        <div class="info-container">
+            <span>Wrong Guesses: <span id="wrong-guesses">0</span></span>
+            <span>Guesses Left: <span id="guesses-left">0</span></span>
+        </div>
     </div>
     <div id="message-container"><h1 id="win-message"></h1></div>
     <div class="game-wrapper">

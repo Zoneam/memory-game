@@ -9,10 +9,62 @@ body { font-family: sans-serif; }
     justify-content: space-between;
     margin: 0 auto;
     width: fit-content;
-    margin-top: 40px;
+    margin-top: 10px;
     font-size: 42px;
     height:60px;
     width: 200px;
+}
+
+.timer-container{
+    border: 2px solid rgb(179, 179, 184);
+    border-radius: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:200px;
+    padding:5px;
+    margin-right: 15px;
+}
+
+#wrong-guesses, #guesses-left{
+    /* margin: 0 auto; */
+    font-weight: bolder;
+    color:green;
+    float: right;
+}
+
+.info-container{
+    border-radius: 10%;
+    border: 2px solid rgb(179, 179, 184);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:200px;
+    flex-wrap: nowrap;
+    padding:5px;
+    margin-left: 15px;
+}
+
+#header{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: fit-content;
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+#heder-middle {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    width: fit-content;
+    margin-top: 20px;
+    font-size: 42px;
+    /* height:60px;
+    width: 200px; */
 }
 
 #button-container{
