@@ -1,6 +1,7 @@
 let flippedCards, flippedCardIds = [];
 let score = 0;
-let timer = null;
+let timer, countdown = null;
+let wins = 0;
 const cardDeck = document.querySelector('.game-wrapper');
 const boardSize = document.getElementById("inputField");
 const incrementButton = document.getElementById("incrementButton");
@@ -9,9 +10,25 @@ const winMessage = document.querySelector('#win-message');
 const resetButton = document.querySelector('#resetButton');
 const wrongGuesses = document.querySelector('#wrong-guesses');
 const guessesLeft = document.querySelector('#guesses-left');
+const totalWins = document.querySelector('#total-wins');
+const timeLeftSpan = document.querySelector('#timer');
+const enableHints = document.querySelector('.custom-control-input');
 // ********** Game Reset **********
 resetButton.addEventListener('click', () => {
     renderDeck(parseInt(boardSize.textContent));
+});
+
+// ********** Adding Removing Hints **********
+enableHints.addEventListener('click', () => {
+    if(enableHints.checked) {
+        timer = setInterval(hint, 800/parseInt(boardSize.textContent)*40);
+    } else {
+        clearInterval(timer);
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach((card) => {
+            card.firstElementChild.querySelector('h1').classList.remove('fade-number');
+        });
+    }
 });
 
 // ********** Board Size **********
@@ -65,7 +82,10 @@ function createCard(id, value) {
 
 // Render tiles to the DOM
 function renderDeck(tiles) {
+    timeLeft = tiles/4 + tiles/2*4 ;
+    timeLeftSpan.textContent = timeLeft;
     if (timer) clearInterval(timer);
+    if (countdown) clearInterval(countdown);
     score = 0;
     wrongGuesses.textContent = 0;
     guessesLeft.textContent = boardSize.textContent/2;
@@ -90,8 +110,10 @@ function renderDeck(tiles) {
         card.children[1].querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.addEventListener('click', flipCard);
     });
-    timer = setInterval(hint, 800/tiles*40);
+    if(enableHints.checked) timer = setInterval(hint, 800/tiles*40);
+    countdown = setInterval(countDown, 1000);
 }
+
 
 // Flip a Card
 function flipCard(event) {
@@ -112,6 +134,7 @@ function flipCard(event) {
                 flippedCardIds = [];
                 guessesLeft.textContent = boardSize.textContent/2 - score;
                 if (score === boardSize.textContent/2) {
+                    totalWins.textContent = parseInt(totalWins.textContent) + 1;
                     winMessage.innerText = "You won!"
                 }
             } else {
@@ -133,6 +156,17 @@ function flipCard(event) {
         }
     }
 }
+
+// ********** Timer **********
+function  countDown() {
+    if (timeLeft== 0) {
+      clearInterval(countdown);
+      cardDeck.innerHTML = '';
+        winMessage.innerText = "You lost!"
+    }
+    timeLeftSpan.textContent = timeLeft;
+    timeLeft--;
+  }
 
 // ********** Hint Function **********
 function hint() {
