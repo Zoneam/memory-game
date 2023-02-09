@@ -6,14 +6,31 @@ body { font-family: sans-serif; }
     text-align: center;
     background: transparent;
     display: flex;
+    justify-content: space-between;
     margin: 0 auto;
     width: fit-content;
-    margin-top: 100px;
+    margin-top: 40px;
+    font-size: 42px;
+    height:60px;
+    width: 200px;
+}
+
+#button-container{
+    display: flex;
+    margin: 10px auto;
+    width: fit-content;
+    font-size: 42px;
+    height:60px;
+    width: 200px;
+}
+
+#resetButton{
+    width: 100%;
 }
 
 .game-wrapper {
     display:flex;
-    margin: 55px auto;
+    margin: 10px auto;
     flex-wrap: wrap;
     width: 800px;
     height: 800px;
@@ -76,12 +93,6 @@ body { font-family: sans-serif; }
     margin:0 auto;
     padding-top:35px;
 }
-
-  input {
-    font-size: 24px;
-    height:60px;
-    width: 70px;
-  }
 
   .number, .fade-number {
     margin: auto;

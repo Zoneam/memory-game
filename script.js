@@ -1,37 +1,45 @@
-let flippedCards = [];
-let flippedCardIds = [];
+let flippedCards, flippedCardIds = [];
 let score = 0;
 let timer = null;
 const cardDeck = document.querySelector('.game-wrapper');
-let inputField = document.getElementById("inputField");
-let incrementButton = document.getElementById("incrementButton");
-let decrementButton = document.getElementById("decrementButton");
-let winMessage = document.querySelector('#win-message');
+const boardSize = document.getElementById("inputField");
+const incrementButton = document.getElementById("incrementButton");
+const decrementButton = document.getElementById("decrementButton");
+const winMessage = document.querySelector('#win-message');
+const resetButton = document.querySelector('#resetButton');
 
+// ********** Game Reset **********
+resetButton.addEventListener('click', () => {
+    renderDeck(parseInt(boardSize.textContent));
+});
+
+// ********** Board Size **********
+
+// Increase Board Size to Next Perfect Square
 function nextPerfectSquare(num) {
     if(num > 28) num = 28;
     return (num + 1 % 2 == 0) ? Math.pow(num + 1,2) : Math.pow(num + 2, 2);
 }
 
+incrementButton.addEventListener("click", function() {
+    let current = parseInt(boardSize.textContent);
+    boardSize.textContent = nextPerfectSquare(Math.sqrt(current));
+    renderDeck(boardSize.textContent);
+});
+
+// Decrease Board Size to Next Perfect Square
 function prevPerfectSquare(num) {
     if(num < 4) num = 4;
     return (num - 1 % 2 == 0) ? Math.pow(num - 1,2) : Math.pow(num - 2, 2);
 }
 
-  incrementButton.addEventListener("click", function() {
-    let current = parseInt(inputField.value);
-    inputField.value = nextPerfectSquare(Math.sqrt(current));
-    renderDeck(inputField.value);
-  });
+decrementButton.addEventListener("click", function() {
+    let current = parseInt(boardSize.textContent);
+    boardSize.textContent = prevPerfectSquare(Math.sqrt(current));
+    renderDeck(boardSize.textContent);
+});
 
-  decrementButton.addEventListener("click", function() {
-    let current = parseInt(inputField.value);
-    inputField.value = prevPerfectSquare(Math.sqrt(current));
-    renderDeck(inputField.value);
-  });
-
-//   cardDeck.addEventListener('click', flipCard);
-
+// ********** Game Logic **********
 
 function shuffle(cards) {
     let currentIndex = cards.length, temporaryValue, randomIndex;
@@ -54,8 +62,9 @@ function createCard(id, value) {
             </div>`
 }
 
-// Render the deck of cards
+// Render tiles to the DOM
 function renderDeck(tiles) {
+    console.log(tiles)
     if (timer) clearInterval(timer);
     score = 0;
     flippedCardIds = [];
@@ -82,7 +91,7 @@ function renderDeck(tiles) {
     timer = setInterval(hint, 800/tiles*40);
 }
 
-// Flip a card
+// Flip a Card
 function flipCard(event) {
     const card = event.currentTarget;
     const id = card.getAttribute('data-id');
@@ -94,15 +103,12 @@ function flipCard(event) {
         flippedCards.push({ id, value });
         flippedCardIds.push(id);
         card.classList.add('is-flipped');
-
         if (flippedCards.length === 2) {
-
             if (flippedCards[0].value === flippedCards[1].value) {
                 score++;
                 flippedCards = [];
                 flippedCardIds = [];
-
-                if (score === inputField.value/2) {
+                if (score === boardSize.textContent/2) {
                     winMessage.innerText = "You win!"
                 }
             } else {
@@ -124,16 +130,15 @@ function flipCard(event) {
     }
 }
 
-
+// ********** Hint Function **********
 function hint() {
-        let card1 = document.querySelector(`[data-id="${Math.floor(Math.random() * inputField.value)}"]`);
+        let card1 = document.querySelector(`[data-id="${Math.floor(Math.random() * boardSize.textContent)}"]`);
         card1.children[0].querySelector('h1').innerText = card1.children[1].querySelector('h1').innerText;
         card1.children[0].querySelector('h1').classList.add('fade-number');
         setTimeout(() => {
             card1.children[0].querySelector('h1').classList.remove('fade-number');
             card1.children[0].querySelector('h1').innerText = '';
         }, 3000);
-
 }
 
 // Initial render of the deck
