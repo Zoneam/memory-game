@@ -30,7 +30,7 @@ function prevPerfectSquare(num) {
     renderDeck(inputField.value);
   });
 
-  cardDeck.addEventListener('click', flipCard);
+//   cardDeck.addEventListener('click', flipCard);
 
 
 function shuffle(cards) {
@@ -74,16 +74,17 @@ function renderDeck(tiles) {
     allCards.forEach((card) => {
         console.log(cardDeck.offsetWidth)
         card.style.width = `${parseInt(cardDeck.offsetWidth)/Math.sqrt(tiles)}px`;
+        card.style.height = `${parseInt(cardDeck.offsetWidth)/Math.sqrt(tiles)}px`;
         card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.children[1].querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
-        // card.addEventListener('click', flipCard);
+        card.addEventListener('click', flipCard);
     });
     timer = setInterval(hint, 800/tiles*40);
 }
 
 // Flip a card
 function flipCard(event) {
-    const card = event.target.parentNode;
+    const card = event.currentTarget;
     const id = card.getAttribute('data-id');
     const value = card.getAttribute('data-value');
     card.firstElementChild.querySelector('h1').classList.remove('fade-number');

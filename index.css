@@ -99,7 +99,7 @@ body { font-family: sans-serif; }
   @media screen and (max-width: 800px) {
     .game-wrapper {
       width: 100%;
-
+      height:100%;
     }
   }
     
