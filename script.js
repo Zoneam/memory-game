@@ -61,7 +61,6 @@ decrementButton.addEventListener("click", function() {
 
 function shuffle(cards) {
     let currentIndex = cards.length, temporaryValue, randomIndex;
-
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
