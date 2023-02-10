@@ -235,6 +235,9 @@ body { font-family: sans-serif; }
         padding: 2px;
     }
 
+    #title{
+      display:none;
+    }
 
   }
     
