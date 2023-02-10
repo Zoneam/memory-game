@@ -1,4 +1,4 @@
-let flippedCards, flippedCardIds = [];
+let flippedCards, flippedCardIds, guessedCards = [];
 let score = 0;
 let timer, countdown = null;
 let wins = 0;
@@ -13,6 +13,7 @@ const guessesLeft = document.querySelector('#guesses-left');
 const totalWins = document.querySelector('#total-wins');
 const timeLeftSpan = document.querySelector('#timer');
 const enableHints = document.querySelector('.custom-control-input');
+
 // ********** Game Reset **********
 resetButton.addEventListener('click', () => {
     renderDeck(parseInt(boardSize.textContent));
@@ -81,13 +82,14 @@ function createCard(id, value) {
 
 // Render tiles to the DOM
 function renderDeck(tiles) {
-    timeLeft = tiles/4 + tiles/2*4 ;
+    timeLeft = tiles/2 + tiles/2*4 ;
     timeLeftSpan.textContent = timeLeft;
     if (timer) clearInterval(timer);
     if (countdown) clearInterval(countdown);
     score = 0;
     wrongGuesses.textContent = 0;
     guessesLeft.textContent = boardSize.textContent/2;
+    guessedCards = [];
     flippedCardIds = [];
     flippedCards = [];
     const cards = [];
@@ -119,8 +121,8 @@ function flipCard(event) {
     const card = event.currentTarget;
     const id = card.getAttribute('data-id');
     const value = card.getAttribute('data-value');
+    if (guessedCards.includes(id)) return;
     card.firstElementChild.querySelector('h1').classList.remove('fade-number');
-
     if (flippedCards.length < 2 && !flippedCardIds.includes(id)) {
         card.firstElementChild.querySelector('h1').innerText = value;
         flippedCards.push({ id, value });
@@ -129,12 +131,14 @@ function flipCard(event) {
         if (flippedCards.length === 2) {
             if (flippedCards[0].value === flippedCards[1].value) {
                 score++;
+                guessedCards.push(flippedCards[0].id, flippedCards[1].id);
                 flippedCards = [];
                 flippedCardIds = [];
                 guessesLeft.textContent = boardSize.textContent/2 - score;
                 if (score === boardSize.textContent/2) {
                     totalWins.textContent = parseInt(totalWins.textContent) + 1;
                     winMessage.innerText = "You won!"
+                    clearInterval(countdown);
                 }
             } else {
                 setTimeout(() => {
