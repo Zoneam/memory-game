@@ -1,7 +1,7 @@
 let flippedCards, flippedCardIds, guessedCards = [];
 let score = 0;
+let losses = 0;
 let timer, countdown = null;
-let wins = 0;
 const cardDeck = document.querySelector('.game-wrapper');
 const boardSize = document.getElementById("inputField");
 const incrementButton = document.getElementById("incrementButton");
@@ -13,6 +13,7 @@ const totalWins = document.querySelector('#total-wins');
 const timeLeftSpan = document.querySelector('#timer');
 const enableHints = document.querySelector('.custom-control-input');
 const range = document.querySelector('#range');
+const totalLosses = document.querySelector('#losses');
 
 // ********** Game Reset **********
 resetButton.addEventListener('click', () => {
@@ -174,6 +175,7 @@ function  countDown() {
       clearInterval(countdown);
       clearInterval(timer);
       cardDeck.innerHTML = '';
+      totalLosses.textContent = parseInt(totalLosses.textContent) + 1;
       timeLeftSpan.innerText = "You lost!"
     }
   }

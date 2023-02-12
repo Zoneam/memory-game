@@ -27,7 +27,7 @@ body { font-family: sans-serif; }
     margin-right: 15px;
 }
 
-#wrong-guesses, #guesses-left, #total-wins{
+#wrong-guesses, #guesses-left, #total-wins, #losses{
     /* margin: 0 auto; */
     font-weight: bolder;
     color:green;
@@ -145,6 +145,7 @@ body { font-family: sans-serif; }
   }
 
   .hints {
+    width: 100%;
     display:flex;
     flex-direction: column;
   }
