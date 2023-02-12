@@ -6,7 +6,6 @@ const cardDeck = document.querySelector('.game-wrapper');
 const boardSize = document.getElementById("inputField");
 const incrementButton = document.getElementById("incrementButton");
 const decrementButton = document.getElementById("decrementButton");
-const winMessage = document.querySelector('#win-message');
 const resetButton = document.querySelector('#resetButton');
 const wrongGuesses = document.querySelector('#wrong-guesses');
 const guessesLeft = document.querySelector('#guesses-left');
@@ -102,7 +101,6 @@ function renderDeck(tiles) {
     flippedCardIds = [];
     flippedCards = [];
     const cards = [];
-    winMessage.innerText = "";
     for (let i = 0; i < tiles/2; i++) {
         cards.push(i,i);
     }
@@ -145,7 +143,7 @@ function flipCard(event) {
                 guessesLeft.textContent = boardSize.textContent/2 - score;
                 if (score === boardSize.textContent/2) {
                     totalWins.textContent = parseInt(totalWins.textContent) + 1;
-                    winMessage.innerText = "You won!"
+                    timeLeftSpan.innerText = "You won!"
                     clearInterval(countdown);
                 }
             } else {
@@ -170,14 +168,14 @@ function flipCard(event) {
 
 // ********** Timer **********
 function  countDown() {
+    timeLeft--;
+    timeLeftSpan.textContent = timeLeft;
     if (timeLeft == 0) {
       clearInterval(countdown);
       clearInterval(timer);
       cardDeck.innerHTML = '';
-        winMessage.innerText = "You lost!"
+      timeLeftSpan.innerText = "You lost!"
     }
-    timeLeftSpan.textContent = timeLeft;
-    timeLeft--;
   }
 
 // ********** Hint Function **********

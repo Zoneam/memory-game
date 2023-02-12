@@ -55,7 +55,7 @@ body { font-family: sans-serif; }
     font-size: 22px;
 }
 
-#heder-middle {
+#header-middle {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -63,8 +63,6 @@ body { font-family: sans-serif; }
     width: fit-content;
     margin-top: 20px;
     font-size: 42px;
-    /* height:60px;
-    width: 200px; */
 }
 
 #button-container{
@@ -158,9 +156,19 @@ body { font-family: sans-serif; }
     margin-bottom: 10px;
   }
 
+  #hint-wrapper{
+    display: flex;
+    margin: 0 auto;
+    width:100%;
+    margin-top:5px;
+    padding:2px;
+    flex-direction: column;
+    border: 2px dotted gray;
+  }
+
+
 #win-message {
     margin: 0 auto;
-    /* width: 347px; */
     width: fit-content;
 }
 
@@ -221,6 +229,11 @@ body { font-family: sans-serif; }
     #header-middle{
         margin-top: 5px;
     }
+
+    #header-middle{
+      width: 100%;
+    }
+  
 
     #input{
         height: fit-content;
