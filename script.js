@@ -155,13 +155,13 @@ function flipCard(event) {
                         cardToFlip.firstElementChild.querySelector('h1').classList.add('fade-number');
                         setTimeout(() => {
                             cardToFlip.firstElementChild.querySelector('h1').innerText = '';
-                        },2000);
+                        },3000);
                         
                     });
                     flippedCards = [];
                     flippedCardIds = [];
                     wrongGuesses.textContent = parseInt(wrongGuesses.textContent) + 1;
-                }, 1000);
+                }, 600);
             }
         }
     }
