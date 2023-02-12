@@ -146,6 +146,18 @@ body { font-family: sans-serif; }
     height:60px;
   }
 
+  .hints {
+    display:flex;
+    flex-direction: column;
+  }
+
+  #range{
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
 #win-message {
     margin: 0 auto;
     /* width: 347px; */

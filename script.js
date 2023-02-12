@@ -13,6 +13,7 @@ const guessesLeft = document.querySelector('#guesses-left');
 const totalWins = document.querySelector('#total-wins');
 const timeLeftSpan = document.querySelector('#timer');
 const enableHints = document.querySelector('.custom-control-input');
+const range = document.querySelector('#range');
 
 // ********** Game Reset **********
 resetButton.addEventListener('click', () => {
@@ -21,6 +22,7 @@ resetButton.addEventListener('click', () => {
 
 // ********** Adding Removing Hints **********
 enableHints.addEventListener('click', () => {
+    range.disabled = !range.disabled;
     if(enableHints.checked) {
         timer = setInterval(hint, 800/parseInt(boardSize.textContent)*40);
     } else {
@@ -29,6 +31,13 @@ enableHints.addEventListener('click', () => {
         allCards.forEach((card) => {
             card.firstElementChild.querySelector('h1').classList.remove('fade-number');
         });
+    }
+});
+
+range.addEventListener('input', () => {
+    if(timer) {
+        clearInterval(timer);
+        timer = setInterval(hint, (1000000/(range.value*boardSize.textContent)));
     }
 });
 
@@ -82,7 +91,7 @@ function createCard(id, value) {
 
 // Render tiles to the DOM
 function renderDeck(tiles) {
-    timeLeft = tiles/2 + tiles/2*4 ;
+    timeLeft = Math.floor((tiles/2)*Math.sqrt(tiles/2)) ;
     timeLeftSpan.textContent = timeLeft;
     if (timer) clearInterval(timer);
     if (countdown) clearInterval(countdown);
@@ -104,14 +113,13 @@ function renderDeck(tiles) {
     // Add event listeners to each card
     const allCards = document.querySelectorAll('.card');
     allCards.forEach((card) => {
-        console.log(cardDeck.offsetWidth)
         card.style.width = `${parseInt(cardDeck.offsetWidth)/Math.sqrt(tiles)}px`;
         card.style.height = `${parseInt(cardDeck.offsetWidth)/Math.sqrt(tiles)}px`;
         card.firstElementChild.querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.children[1].querySelector('h1').style.fontSize = `${(800/Math.sqrt(tiles)/10*4)}px`;
         card.addEventListener('click', flipCard);
     });
-    if(enableHints.checked) timer = setInterval(hint, 800/tiles*40);
+    if(enableHints.checked) timer = setInterval(hint, (1000000/(range.value*tiles)));
     countdown = setInterval(countDown, 1000);
 }
 
@@ -162,8 +170,9 @@ function flipCard(event) {
 
 // ********** Timer **********
 function  countDown() {
-    if (timeLeft== 0) {
+    if (timeLeft == 0) {
       clearInterval(countdown);
+      clearInterval(timer);
       cardDeck.innerHTML = '';
         winMessage.innerText = "You lost!"
     }
